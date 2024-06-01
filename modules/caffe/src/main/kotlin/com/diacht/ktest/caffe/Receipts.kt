@@ -2,7 +2,6 @@ package com.diacht.ktest.caffe
 
 import com.diacht.ktest.Product
 import com.diacht.ktest.Receipt
-import com.diacht.ktest.SUGAR
 import com.diacht.ktest.WATER
 import java.util.concurrent.TimeUnit
 

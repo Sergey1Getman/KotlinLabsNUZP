@@ -8,7 +8,7 @@ abstract class FactoryItf {
     abstract fun resetSimulation()
 
     /**
-     * Отримати продукти від постачальника, та зберегти їх в сховищі.
+     * Отримати продукти від постачальника, та зберігти їх в сховищі.
      */
     abstract fun loadProducts(productsFromSupplier: List<Product>)
 
