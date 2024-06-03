@@ -8,7 +8,6 @@ import kotlin.math.sqrt
 
 // Simulate sending data to server and getting a response
 suspend fun sendToServer(data: String): Int {
-    // Simulate delay and server response
     // For demonstration, we will convert the string to its length as the server's response
     return data.length
 }
@@ -40,7 +39,7 @@ fun main(args: Array<String>) = runBlocking {
     //startTestUi(seed(), labNumber())
 
     // Example usage of serverDataCalculate
-    val strList = listOf("apple", "banana", "cherry", "date", "fig", "grape")
+    val strList = List(10) { index -> "testString$index" }
     val result = serverDataCalculate(strList)
     println("Result: $result")
 }
