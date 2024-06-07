@@ -1,23 +1,29 @@
 import com.diacht.ktest.compose.startTestUi
 import com.diacht.ktest.library.BuildConfig
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
+import java.net.URL
+import kotlin.math.cbrt
 import kotlin.math.pow
-import kotlin.math.sqrt
 
-// Simulate sending data to server and getting a response
-suspend fun sendToServer(data: String): Int {
-    // Simulate delay and server response
-    // For demonstration, we will convert the string to its length as the server's response
-    return data.length
+// Function to retrieve number from server
+suspend fun getNumberFromServer(message: String): Int = withContext(Dispatchers.IO) {
+    val url = URL("http://diacht.2vsoft.com/api/send-number?message=$message")
+    val connection = url.openConnection()
+    connection.connect()
+
+    val input = connection.getInputStream()
+    val buffer = ByteArray(128)
+    val bytesRead = input.read(buffer)
+
+    input.close()
+    String(buffer, 0, bytesRead).toInt()
 }
 
 // Function to calculate the result based on the server responses
 suspend fun serverDataCalculate(strList: List<String>): Double = coroutineScope {
     // Sending elements to server asynchronously
     val deferredResults = strList.map { data ->
-        async { sendToServer(data) }
+        async { getNumberFromServer(data) }
     }
 
     // Waiting for all responses
@@ -28,7 +34,7 @@ suspend fun serverDataCalculate(strList: List<String>): Double = coroutineScope 
     println("Intermediate results: ${results.joinToString(", ")}")
     println("Sum of squares: $sumOfSquares")
 
-    return@coroutineScope sqrt(sumOfSquares)
+    return@coroutineScope cbrt(sumOfSquares)
 }
 
 // Main function
